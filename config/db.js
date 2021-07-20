@@ -1,14 +1,13 @@
 // import required modules and config values
 const mongoose = require('mongoose');
-const config = require('config');
-const db = config.get('mongoURI');
 
 // mongoDB connection
 const connectDB = async () => {
   try {
-    await mongoose.connect(db, {
+    await mongoose.connect(process.env.MONGO_URI, {
       useUnifiedTopology: true,
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useCreateIndex: true
     });
 
     console.log('MongoDB Connected...');

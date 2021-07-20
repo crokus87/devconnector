@@ -5,8 +5,11 @@ const connectDB = require('./config/db');
 // variables to store express
 const app = express();
 
-// connect to the mogoDB database
+// connect to the mongoDB database
 connectDB();
+
+// initialize middleware
+app.use(express.json());
 
 // test request to see if the api is running
 app.get('/', (req, res) => res.send('API Running'));
@@ -18,7 +21,7 @@ app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
 
 // variable to store the port data
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 // setup express server
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
