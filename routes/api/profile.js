@@ -2,7 +2,6 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
-const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 
 // create express router
@@ -30,7 +29,7 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
-// @route   Post api/profile/
+// @route   POST api/profile/
 // @desc    Create or update user's profile
 // @access  Private
 router.post(
@@ -86,5 +85,18 @@ router.post(
     }
   }
 );
+
+// @route   GET api/profile/
+// @desc    Get all profiles
+// @access  Public
+router.get('/', async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
 
 module.exports = router;
