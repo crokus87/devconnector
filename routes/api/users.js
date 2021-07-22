@@ -75,8 +75,4 @@ router.post(
   }
 );
 
-// @route   DELETE api/users
-// @desc    Delete user
-// @access  Private
-
 module.exports = router;
