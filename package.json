@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "serve": "env-cmd -f ./config/dev.env nodemon server",
+    "serve": "env-cmd -f ./config/dev.env nodemon server -i client",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run serve\" \"npm run client\""
   },
