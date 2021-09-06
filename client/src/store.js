@@ -10,11 +10,14 @@ const initialState = {};
 // variable to store middleware being used
 const middleware = [thunk];
 
+// allow Redux to trace action calls
+const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
+
 // Create the Store
 const store = createStore(
   rootReducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeEnhancers(applyMiddleware(...middleware))
 );
 
 // initialize current state from redux store for subscription comparison preventing undefined error
