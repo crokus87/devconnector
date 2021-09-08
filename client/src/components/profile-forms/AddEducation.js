@@ -84,7 +84,7 @@ const AddEducation = ({ addEducation, history }) => {
                 setFormData({ ...formData, current: !current });
               }}
             />{' '}
-            Current Job
+            Current Program or Course
           </p>
         </div>
         <div className="form-group">
