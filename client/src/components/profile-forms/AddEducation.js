@@ -5,32 +5,28 @@ import { connect } from 'react-redux';
 import { addEducation } from '../../actions/profile';
 
 const AddEducation = ({ addEducation, history }) => {
-  // set initial state
   const [formData, setFormData] = useState({
     school: '',
     degree: '',
-    fieldofsudy: '',
+    fieldofstudy: '',
     from: '',
     to: '',
     current: false,
     description: ''
   });
 
-  // variables to store form data
-  const { school, degree, fieldofstudy, from, to, current, description } =
+  const { school, degree, fieldofstudy, from, to, description, current } =
     formData;
 
-  // function to record changes to the form
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // render the form
   return (
     <Fragment>
       <h1 className="large text-primary">Add Your Education</h1>
       <p className="lead">
-        <i className="fas fa-code-branch"></i>
-        Add any school or bootcamp that you have attended
+        <i className="fas fa-code-branch" /> Add any school or bootcamp that you
+        have attended
       </p>
       <small>* = required field</small>
       <form
@@ -79,12 +75,10 @@ const AddEducation = ({ addEducation, history }) => {
               type="checkbox"
               name="current"
               checked={current}
-              value="current"
-              onChange={() => {
-                setFormData({ ...formData, current: !current });
-              }}
+              value={current}
+              onChange={() => setFormData({ ...formData, current: !current })}
             />{' '}
-            Current Program or Course
+            Current School
           </p>
         </div>
         <div className="form-group">
@@ -105,10 +99,10 @@ const AddEducation = ({ addEducation, history }) => {
             placeholder="Program Description"
             value={description}
             onChange={onChange}
-          ></textarea>
+          />
         </div>
         <input type="submit" className="btn btn-primary my-1" />
-        <Link className="btn my-1" to="/dashboard">
+        <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
         </Link>
       </form>
