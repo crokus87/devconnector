@@ -8,7 +8,7 @@ import { getCurrentProfile } from '../../actions/profile';
 const Dashboard = ({
   getCurrentProfile,
   auth: { user },
-  profile: { profile, loading }
+  profile: { profile }
 }) => {
   useEffect(() => {
     getCurrentProfile();
