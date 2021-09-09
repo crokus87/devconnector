@@ -5,6 +5,7 @@ const axios = require('axios');
 const auth = require('../../middleware/auth');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 
 // create express router
 const router = express.Router();
@@ -288,7 +289,8 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
 // @access  Private
 router.delete('/', auth, async (req, res) => {
   try {
-    // @todo - remove user's posts
+    // remove user's posts
+    await Post.deleteMany({ user: req.user.id });
 
     // remove profile
     await Profile.findOneAndDelete({ user: req.user.id });
