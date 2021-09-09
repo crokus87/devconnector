@@ -2,6 +2,7 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
 const axios = require('axios');
+const normalize = require('normalize-url');
 const auth = require('../../middleware/auth');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
@@ -27,14 +28,41 @@ router.post(
     }
 
     // setup the profile object and associate it with the user
-    const { skills, youtube, twitter, facebook, linkedin, instagram } =
-      req.body;
+    const {
+      company,
+      location,
+      website,
+      bio,
+      skills,
+      status,
+      githubusername,
+      youtube,
+      twitter,
+      facebook,
+      linkedin,
+      instagram
+    } = req.body;
     const profileFields = {
-      ...req.body,
       user: req.user.id,
-      skills: skills.split(',').map((skill) => skill.trim()),
-      social: { youtube, twitter, facebook, linkedin, instagram }
+      company,
+      location,
+      website: website === '' ? '' : normalize(website, { forceHttps: true }),
+      bio,
+      skills: Array.isArray(skills)
+        ? skills
+        : skills.split(',').map((skill) => ' ' + skill.trim()),
+      status,
+      githubusername
     };
+
+    // Build social object and add to profileFields
+    const socialFields = { youtube, twitter, facebook, linkedin, instagram };
+
+    for (const [key, value] of Object.entries(socialFields)) {
+      if (value.length > 0)
+        socialFields[key] = normalize(value, { forceHttps: true });
+    }
+    profileFields.social = socialFields;
 
     try {
       let profile = await Profile.findOne({ user: req.user.id });
